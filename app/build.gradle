@@ -27,10 +27,12 @@ dependencies {
     implementation rootProject.ext.dependencies.retrofit2
     implementation rootProject.ext.dependencies.adapterRxJava2
     implementation rootProject.ext.dependencies.converterGson
+    implementation rootProject.ext.dependencies.okhttp3Logging
     //rxjava
     implementation rootProject.ext.dependencies.rxJava
     implementation rootProject.ext.dependencies.rxAndroid
     //glide
     implementation rootProject.ext.dependencies.glide
+    implementation rootProject.ext.dependencies.logger
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
 }

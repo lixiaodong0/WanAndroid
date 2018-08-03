@@ -1,12 +1,11 @@
-package com.lixd.wanandroid.data.source.remote;
+package com.lixd.wanandroid.data.source.local;
 
 import com.lixd.wanandroid.data.UserData;
 import com.lixd.wanandroid.data.source.LoginDataSource;
 
 import io.reactivex.Observable;
 
-public class LoginDataRemoteSource implements LoginDataSource {
-
+public class LoginLocalDataSource implements LoginDataSource {
     @Override
     public Observable<UserData> getLocalLoginData(int userId) {
         return null;

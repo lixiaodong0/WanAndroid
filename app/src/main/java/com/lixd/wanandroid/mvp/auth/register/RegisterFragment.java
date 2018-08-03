@@ -1,13 +1,15 @@
-package com.lixd.wanandroid.mvp.outh.register;
+package com.lixd.wanandroid.mvp.auth.register;
 
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lixd.wanandroid.R;
 import com.lixd.wanandroid.base.BaseFragment;
-import com.lixd.wanandroid.mvp.outh.AuthActivity;
+import com.lixd.wanandroid.data.UserData;
+import com.lixd.wanandroid.mvp.auth.AuthActivity;
 
 public class RegisterFragment extends BaseFragment implements View.OnClickListener, RegisterContract.View {
     public static final String TAG = RegisterFragment.class.getSimpleName();
@@ -79,19 +81,25 @@ public class RegisterFragment extends BaseFragment implements View.OnClickListen
         activity.showLoginFragment();
     }
 
-    @Override
-    public void onRegisterSuccess() {
 
+    @Override
+    public void setPresenter(RegisterContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void registerSuccess(UserData data) {
+        Toast.makeText(getContext(), "注册成功", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void registerError(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onNetworkError() {
 
-    }
-
-    @Override
-    public void setPresenter(RegisterContract.Presenter presenter) {
-        mPresenter = presenter;
     }
 }
 

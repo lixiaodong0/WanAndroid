@@ -1,12 +1,15 @@
-package com.lixd.wanandroid.mvp.outh.login;
+package com.lixd.wanandroid.mvp.auth.login;
 
+import com.lixd.wanandroid.data.UserData;
 import com.lixd.wanandroid.mvp.BasePresenter;
 import com.lixd.wanandroid.mvp.BaseView;
 
 public interface LoginContract {
 
     interface View extends BaseView<LoginContract.Presenter> {
-        void loginSuccess();
+        void loginSuccess(UserData data);
+
+        void loginError(String msg);
 
         void onNetworkError();
     }

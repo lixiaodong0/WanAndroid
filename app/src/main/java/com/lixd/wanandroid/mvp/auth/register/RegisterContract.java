@@ -1,12 +1,15 @@
-package com.lixd.wanandroid.mvp.outh.register;
+package com.lixd.wanandroid.mvp.auth.register;
 
+import com.lixd.wanandroid.data.UserData;
 import com.lixd.wanandroid.mvp.BasePresenter;
 import com.lixd.wanandroid.mvp.BaseView;
 
 public interface RegisterContract {
 
     interface View extends BaseView<RegisterContract.Presenter> {
-        void onRegisterSuccess();
+        void registerSuccess(UserData data);
+
+        void registerError(String msg);
 
         void onNetworkError();
     }

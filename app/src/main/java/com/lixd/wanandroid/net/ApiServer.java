@@ -1,5 +1,8 @@
 package com.lixd.wanandroid.net;
 
+import com.lixd.wanandroid.data.BaseData;
+import com.lixd.wanandroid.data.UserData;
+
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.http.Field;
@@ -12,24 +15,24 @@ public interface ApiServer {
     /**
      * 用户登录
      *
-     * @param userName 用户名称
+     * @param username 用户名称
      * @param password 密码
      */
     @FormUrlEncoded
     @POST("user/login")
-    Observable<ResponseBody> login(@Field("userName") String userName,
-                                   @Field("password") String password);
+    Observable<BaseData<UserData>> login(@Field("username") String username,
+                                         @Field("password") String password);
 
     /**
      * 用户注册
      *
-     * @param userName   用户名称
+     * @param username   用户名称
      * @param password   密码
      * @param repassword 二次密码
      */
     @FormUrlEncoded
     @POST("user/register")
-    Observable<ResponseBody> register(@Field("userName") String userName,
+    Observable<BaseData<UserData>> register(@Field("username") String username,
                                       @Field("password") String password,
                                       @Field("repassword") String repassword);
 

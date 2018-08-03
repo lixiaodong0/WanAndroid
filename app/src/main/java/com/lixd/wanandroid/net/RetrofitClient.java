@@ -1,8 +1,11 @@
 package com.lixd.wanandroid.net;
 
+import com.lixd.wanandroid.net.okhttp.OkHttpLog;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -17,6 +20,8 @@ public class RetrofitClient {
 
         private static final OkHttpClient OK_HTTP_CLIENT =
                 new OkHttpClient.Builder()
+                        .addNetworkInterceptor(
+                                new HttpLoggingInterceptor(new OkHttpLog()).setLevel(HttpLoggingInterceptor.Level.BODY))
                         .readTimeout(Constants.READ_TIME_OUT, TimeUnit.SECONDS)
                         .connectTimeout(Constants.CONNECT_TIME_OUT, TimeUnit.SECONDS)
                         .writeTimeout(Constants.WRITE_TIME_OUT, TimeUnit.SECONDS)

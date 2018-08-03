@@ -9,5 +9,7 @@
     <string name="login_edit_repassword_hint">请再次输入您的密码</string>
     <string name="login_tv_register_tips">如果您还没有账号,请先注册一个吧ヾ(✿ﾟ▽ﾟ)ノ </string>
     <string name="register_tv_login_tips">有账号了,请直接登录吧ヾ(ﾟ∀ﾟゞ)</string>
+    <string name="open">打开</string>
+    <string name="close">关闭</string>
 
 </resources>

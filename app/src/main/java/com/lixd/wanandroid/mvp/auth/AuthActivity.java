@@ -1,4 +1,4 @@
-package com.lixd.wanandroid.mvp.outh;
+package com.lixd.wanandroid.mvp.auth;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -7,10 +7,15 @@ import android.view.Gravity;
 
 import com.lixd.wanandroid.R;
 import com.lixd.wanandroid.base.BaseActivity;
-import com.lixd.wanandroid.mvp.outh.login.LoginFragment;
-import com.lixd.wanandroid.mvp.outh.login.LoginPresenter;
-import com.lixd.wanandroid.mvp.outh.register.RegisterFragment;
-import com.lixd.wanandroid.mvp.outh.register.RegisterPresenter;
+import com.lixd.wanandroid.data.source.LoginRepository;
+import com.lixd.wanandroid.data.source.RegisterRepository;
+import com.lixd.wanandroid.data.source.local.LoginLocalDataSource;
+import com.lixd.wanandroid.data.source.remote.LoginRemoteDataSource;
+import com.lixd.wanandroid.data.source.remote.RegisterRemoteDataSource;
+import com.lixd.wanandroid.mvp.auth.login.LoginFragment;
+import com.lixd.wanandroid.mvp.auth.login.LoginPresenter;
+import com.lixd.wanandroid.mvp.auth.register.RegisterFragment;
+import com.lixd.wanandroid.mvp.auth.register.RegisterPresenter;
 
 public class AuthActivity extends BaseActivity {
 
@@ -51,8 +56,10 @@ public class AuthActivity extends BaseActivity {
                     .commit();
         }
 
-        new LoginPresenter(mLoginFragment);
-        new RegisterPresenter(mRegisterFragment);
+        new LoginPresenter(mLoginFragment,
+                LoginRepository.getInstance(new LoginLocalDataSource(), new LoginRemoteDataSource()));
+        new RegisterPresenter(mRegisterFragment,
+                RegisterRepository.getInstance(new RegisterRemoteDataSource()));
 
         if (!mLoginFragment.isHidden()) {
             showLoginFragment();
@@ -75,7 +82,7 @@ public class AuthActivity extends BaseActivity {
 
     public void showRegisterFragment() {
         Slide registerSlide = new Slide();
-//        registerSlide.setInterpolator(new AccelerateDecelerateInterpolator());
+        //        registerSlide.setInterpolator(new AccelerateDecelerateInterpolator());
         registerSlide.setSlideEdge(Gravity.RIGHT);
         mRegisterFragment.setEnterTransition(registerSlide);
         mRegisterFragment.setExitTransition(registerSlide);
@@ -84,7 +91,7 @@ public class AuthActivity extends BaseActivity {
 
         Slide loginSlide = new Slide();
         loginSlide.setSlideEdge(Gravity.LEFT);
-//        loginSlide.setInterpolator(new AccelerateDecelerateInterpolator());
+        //        loginSlide.setInterpolator(new AccelerateDecelerateInterpolator());
         mLoginFragment.setEnterTransition(loginSlide);
         mLoginFragment.setExitTransition(loginSlide);
         mLoginFragment.setAllowEnterTransitionOverlap(true);

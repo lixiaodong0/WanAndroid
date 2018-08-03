@@ -1,13 +1,15 @@
-package com.lixd.wanandroid.mvp.outh.login;
+package com.lixd.wanandroid.mvp.auth.login;
 
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lixd.wanandroid.R;
 import com.lixd.wanandroid.base.BaseFragment;
-import com.lixd.wanandroid.mvp.outh.AuthActivity;
+import com.lixd.wanandroid.data.UserData;
+import com.lixd.wanandroid.mvp.auth.AuthActivity;
 
 public class LoginFragment extends BaseFragment implements View.OnClickListener, LoginContract.View {
     public static final String TAG = LoginFragment.class.getSimpleName();
@@ -79,9 +81,15 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
     }
 
     @Override
-    public void loginSuccess() {
-
+    public void loginSuccess(UserData data) {
+        Toast.makeText(getContext(), "登录成功", Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void loginError(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
 
     @Override
     public void onNetworkError() {
