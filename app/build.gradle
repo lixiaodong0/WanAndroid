@@ -23,6 +23,7 @@ dependencies {
     implementation rootProject.ext.dependencies.appcompatV7
     implementation rootProject.ext.dependencies.design
     implementation rootProject.ext.dependencies.cardview
+    implementation rootProject.ext.dependencies.recyclerView
     //retrofit
     implementation rootProject.ext.dependencies.retrofit2
     implementation rootProject.ext.dependencies.adapterRxJava2
@@ -34,5 +35,6 @@ dependencies {
     //glide
     implementation rootProject.ext.dependencies.glide
     implementation rootProject.ext.dependencies.logger
+    implementation rootProject.ext.dependencies.BRVAH
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
 }

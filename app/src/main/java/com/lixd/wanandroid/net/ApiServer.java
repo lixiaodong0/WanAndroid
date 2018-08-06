@@ -1,7 +1,11 @@
 package com.lixd.wanandroid.net;
 
 import com.lixd.wanandroid.data.BaseData;
+import com.lixd.wanandroid.data.ClassifyData;
+import com.lixd.wanandroid.data.ClassifyDetailData;
 import com.lixd.wanandroid.data.UserData;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
@@ -9,6 +13,8 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiServer {
 
@@ -33,8 +39,8 @@ public interface ApiServer {
     @FormUrlEncoded
     @POST("user/register")
     Observable<BaseData<UserData>> register(@Field("username") String username,
-                                      @Field("password") String password,
-                                      @Field("repassword") String repassword);
+                                            @Field("password") String password,
+                                            @Field("repassword") String repassword);
 
     /**
      * 获取首页banner图数据
@@ -47,4 +53,18 @@ public interface ApiServer {
      */
     @GET("hotkey/json")
     Observable<ResponseBody> getHotkey();
+
+    /**
+     * 获取项目分类数据
+     */
+    @GET("project/tree/json")
+    Observable<BaseData<List<ClassifyData>>> getProjectClassify();
+
+    /**
+     * 获取项目分类详情数据
+     */
+    @GET("project/list/{page}/json")
+    Observable<BaseData<List<ClassifyDetailData>>> getProjectClassifyDetail(@Path("page") int page, @Query("cid") int cid);
+
+
 }

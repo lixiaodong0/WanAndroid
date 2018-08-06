@@ -2,19 +2,28 @@ package com.lixd.wanandroid;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.lixd.wanandroid.base.BaseActivity;
+import com.lixd.wanandroid.mvp.home.HomeFragment;
+import com.lixd.wanandroid.mvp.project.ProjectClassifyFragment;
+import com.lixd.wanandroid.mvp.recreation.RecreationFragment;
 
 public class MainActivity extends BaseActivity {
 
     private Toolbar mToolbar;
     private NavigationView mNavigationView;
     private DrawerLayout mDrawerLayout;
+    private BottomNavigationView mBottomNavigationView;
+    private HomeFragment mHomeFragment;
+    private ProjectClassifyFragment mProjectClassifyFragment;
+    private RecreationFragment mRecreationFragment;
 
     @Override
     protected int getLayoutId() {
@@ -27,7 +36,7 @@ public class MainActivity extends BaseActivity {
         mToolbar = findViewById(R.id.toolbar);
         initToolbar(mToolbar);
         mNavigationView = findViewById(R.id.navigation_view);
-
+        mBottomNavigationView = findViewById(R.id.mian_bottom_view);
     }
 
     private void initToolbar(Toolbar toolbar) {
@@ -48,6 +57,47 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+        FragmentManager manager = getSupportFragmentManager();
+        if (savedInstanceState != null) {
+            mHomeFragment = (HomeFragment) manager.getFragment(savedInstanceState, HomeFragment.TAG);
+            mProjectClassifyFragment = (ProjectClassifyFragment) manager.getFragment(savedInstanceState, ProjectClassifyFragment.TAG);
+            mRecreationFragment = (RecreationFragment) manager.getFragment(savedInstanceState, RecreationFragment.TAG);
+        } else {
+            mHomeFragment = HomeFragment.newInstance();
+            mProjectClassifyFragment = ProjectClassifyFragment.newInstance();
+            mRecreationFragment = RecreationFragment.newInstance();
+        }
+
+        if (!mHomeFragment.isAdded()) {
+            manager.beginTransaction()
+                    .add(R.id.fl_container, mHomeFragment, HomeFragment.TAG)
+                    .commit();
+        }
+
+        if (!mProjectClassifyFragment.isAdded()) {
+            manager.beginTransaction()
+                    .add(R.id.fl_container, mProjectClassifyFragment, ProjectClassifyFragment.TAG)
+                    .commit();
+        }
+
+        if (!mRecreationFragment.isAdded()) {
+            manager.beginTransaction()
+                    .add(R.id.fl_container, mRecreationFragment, RecreationFragment.TAG)
+                    .commit();
+        }
+
+    }
+
+    public void showHomeFragment() {
+
+    }
+
+    public void showProjectClassifyFragment() {
+
+    }
+
+    public void showRecreationFragment() {
+
     }
 
     @Override
@@ -58,14 +108,37 @@ public class MainActivity extends BaseActivity {
                 mDrawerLayout.closeDrawers();
                 switch (item.getItemId()) {
                     case R.id.nav_my_collection:
+                        // TODO: 2018/8/6 我的收藏
                         break;
                     case R.id.nav_later_read:
+                        // TODO: 2018/8/6 稍后再看
                         break;
                     case R.id.nav_skin_mode:
+                        // TODO: 2018/8/6 日/夜间模式
                         break;
                     case R.id.nav_setting:
+                        // TODO: 2018/8/6 设置
                         break;
                     case R.id.nav_logout:
+                        // TODO: 2018/8/6 注销
+                        break;
+                }
+                return true;
+            }
+        });
+
+        mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.bnv_home:
+                        // TODO: 2018/8/6 首页
+                        break;
+                    case R.id.bnv_project:
+                        // TODO: 2018/8/6 项目
+                        break;
+                    case R.id.bnv_recreation:
+                        // TODO: 2018/8/6 娱乐
                         break;
                 }
                 return true;
@@ -73,4 +146,19 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        FragmentManager manager = getSupportFragmentManager();
+        if (mHomeFragment.isAdded()) {
+            manager.putFragment(outState, HomeFragment.TAG, mHomeFragment);
+        }
+        if (mProjectClassifyFragment.isAdded()) {
+            manager.putFragment(outState, ProjectClassifyFragment.TAG, mProjectClassifyFragment);
+        }
+
+        if (mRecreationFragment.isAdded()) {
+            manager.putFragment(outState, RecreationFragment.TAG, mRecreationFragment);
+        }
+    }
 }
