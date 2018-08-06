@@ -14,13 +14,14 @@ import io.reactivex.functions.Function;
 public class ProjectClassifyPresenter implements ProjectClassifyContract.Presenter {
     private final ProjectClassifyContract.View mView;
     private final ProjectClassifyDataSource mDataSource;
+    private final BaseSchedulerProvider mSchedulerProvider;
     private final CompositeDisposable mCompositeDisposable;
-    private final BaseSchedulerProvider mSchedulerProvider = SchedulerProvider.getInstance();
 
     public ProjectClassifyPresenter(ProjectClassifyContract.View view, ProjectClassifyDataSource dataSource) {
         mView = view;
         mView.setPresenter(this);
         mDataSource = dataSource;
+        mSchedulerProvider = SchedulerProvider.getInstance();
         mCompositeDisposable = new CompositeDisposable();
     }
 
@@ -32,35 +33,36 @@ public class ProjectClassifyPresenter implements ProjectClassifyContract.Present
 
     @Override
     public void unsubscribe() {
-
+        mCompositeDisposable.clear();
     }
 
     @Override
     public void getProjectClassifyData() {
-        mDataSource.getProjectClassifyData()
-                .map(new Function<List<ClassifyData>, List<ClassifyData>>() {
-                    @Override
-                    public List<ClassifyData> apply(List<ClassifyData> classifyData) throws Exception {
-                        //将第一条数据设置为选中
-                        if (classifyData != null && classifyData.size() > 0) {
-                            classifyData.get(0).isSelected = true;
-                        }
-                        return classifyData;
-                    }
-                })
-                .subscribeOn(mSchedulerProvider.io())
-                .observeOn(mSchedulerProvider.ui())
-                .subscribeWith(new CustomEasyObserver<List<ClassifyData>>() {
+        mCompositeDisposable.add(
+                mDataSource.getProjectClassifyData()
+                        .map(new Function<List<ClassifyData>, List<ClassifyData>>() {
+                            @Override
+                            public List<ClassifyData> apply(List<ClassifyData> classifyData) throws Exception {
+                                //将第一条数据设置为选中
+                                if (classifyData != null && classifyData.size() > 0) {
+                                    classifyData.get(0).isSelected = true;
+                                }
+                                return classifyData;
+                            }
+                        })
+                        .subscribeOn(mSchedulerProvider.io())
+                        .observeOn(mSchedulerProvider.ui())
+                        .subscribeWith(new CustomEasyObserver<List<ClassifyData>>() {
 
-                    @Override
-                    protected void onSuccess(List<ClassifyData> data) {
-                        mView.showProjectClassifyData(data);
-                    }
+                            @Override
+                            protected void onSuccess(List<ClassifyData> data) {
+                                mView.showProjectClassifyData(data);
+                            }
 
-                    @Override
-                    protected void onError(int code, String msg) {
-                        mView.showError(msg);
-                    }
-                });
+                            @Override
+                            protected void onError(int code, String msg) {
+                                mView.showError(msg);
+                            }
+                        }));
     }
 }

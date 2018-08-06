@@ -64,7 +64,7 @@ public interface ApiServer {
      * 获取项目分类详情数据
      */
     @GET("project/list/{page}/json")
-    Observable<BaseData<List<ClassifyDetailData>>> getProjectClassifyDetail(@Path("page") int page, @Query("cid") int cid);
+    Observable<BaseData<ClassifyDetailData>> getProjectClassifyDetail(@Path("page") int page, @Query("cid") int cid);
 
 
 }

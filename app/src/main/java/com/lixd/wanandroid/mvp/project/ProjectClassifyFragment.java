@@ -10,6 +10,8 @@ import com.lixd.wanandroid.R;
 import com.lixd.wanandroid.adapter.ProjectClassifyAdapter;
 import com.lixd.wanandroid.base.BaseFragment;
 import com.lixd.wanandroid.data.ClassifyData;
+import com.lixd.wanandroid.data.source.ProjectClassifyPepository;
+import com.lixd.wanandroid.data.source.remote.ProjectClassifyRemoteDataSource;
 
 import java.util.List;
 
@@ -54,6 +56,7 @@ public class ProjectClassifyFragment extends BaseFragment implements ProjectClas
                     }
                 }
                 mProjectClassifyAdapter.notifyDataSetChanged();
+                showClassifyDetailFragment(dataList.get(position).id);
             }
         });
     }
@@ -61,7 +64,20 @@ public class ProjectClassifyFragment extends BaseFragment implements ProjectClas
     @Override
     public void showProjectClassifyData(List<ClassifyData> data) {
         mProjectClassifyAdapter.setNewData(data);
+        if (data != null && data.size() > 0) {
+            showClassifyDetailFragment(data.get(0).id);
+        }
     }
+
+    private void showClassifyDetailFragment(int cid) {
+        ProjectClassifyDetailFragment classifyDetailFragment = ProjectClassifyDetailFragment.newInstance(cid);
+        new ProjectClassifyDetailPresenter(classifyDetailFragment,
+                ProjectClassifyPepository.getInstance(new ProjectClassifyRemoteDataSource()));
+        getChildFragmentManager().beginTransaction()
+                .replace(R.id.fl_container, classifyDetailFragment)
+                .commit();
+    }
+
 
     @Override
     public void showError(String msg) {
@@ -76,7 +92,7 @@ public class ProjectClassifyFragment extends BaseFragment implements ProjectClas
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.unsubscribe();
+        mPresenter.subscribe();
     }
 
     @Override

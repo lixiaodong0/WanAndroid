@@ -2,6 +2,7 @@ package com.lixd.wanandroid.mvp.recreation;
 
 import android.view.View;
 
+import com.lixd.wanandroid.R;
 import com.lixd.wanandroid.base.BaseFragment;
 
 public class RecreationFragment extends BaseFragment {
@@ -14,7 +15,7 @@ public class RecreationFragment extends BaseFragment {
 
     @Override
     protected Object getLayout() {
-        return null;
+        return R.layout.recreation_fragment;
     }
 
     @Override

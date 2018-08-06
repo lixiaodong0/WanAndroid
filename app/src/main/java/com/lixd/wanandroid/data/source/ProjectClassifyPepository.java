@@ -3,6 +3,8 @@ package com.lixd.wanandroid.data.source;
 import com.lixd.wanandroid.data.ClassifyData;
 import com.lixd.wanandroid.data.ClassifyDetailData;
 
+import java.util.List;
+
 import io.reactivex.Observable;
 
 public class ProjectClassifyPepository implements ProjectClassifyDataSource {
@@ -22,7 +24,7 @@ public class ProjectClassifyPepository implements ProjectClassifyDataSource {
 
 
     @Override
-    public Observable<ClassifyData> getProjectClassifyData() {
+    public Observable<List<ClassifyData>> getProjectClassifyData() {
         return mRemoteDataSource.getProjectClassifyData();
     }
 

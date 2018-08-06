@@ -11,8 +11,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.lixd.wanandroid.base.BaseActivity;
+import com.lixd.wanandroid.data.source.ProjectClassifyPepository;
+import com.lixd.wanandroid.data.source.remote.ProjectClassifyRemoteDataSource;
 import com.lixd.wanandroid.mvp.home.HomeFragment;
 import com.lixd.wanandroid.mvp.project.ProjectClassifyFragment;
+import com.lixd.wanandroid.mvp.project.ProjectClassifyPresenter;
 import com.lixd.wanandroid.mvp.recreation.RecreationFragment;
 
 public class MainActivity extends BaseActivity {
@@ -86,18 +89,38 @@ public class MainActivity extends BaseActivity {
                     .commit();
         }
 
+        new ProjectClassifyPresenter(mProjectClassifyFragment,
+                ProjectClassifyPepository.getInstance(new ProjectClassifyRemoteDataSource()));
+
+        showHomeFragment();
     }
 
     public void showHomeFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .show(mHomeFragment)
+                .hide(mProjectClassifyFragment)
+                .hide(mRecreationFragment)
+                .commit();
 
     }
 
     public void showProjectClassifyFragment() {
-
+        getSupportFragmentManager()
+                .beginTransaction()
+                .show(mProjectClassifyFragment)
+                .hide(mHomeFragment)
+                .hide(mRecreationFragment)
+                .commit();
     }
 
     public void showRecreationFragment() {
-
+        getSupportFragmentManager()
+                .beginTransaction()
+                .show(mRecreationFragment)
+                .hide(mHomeFragment)
+                .hide(mProjectClassifyFragment)
+                .commit();
     }
 
     @Override
@@ -133,12 +156,15 @@ public class MainActivity extends BaseActivity {
                 switch (item.getItemId()) {
                     case R.id.bnv_home:
                         // TODO: 2018/8/6 首页
+                        showHomeFragment();
                         break;
                     case R.id.bnv_project:
                         // TODO: 2018/8/6 项目
+                        showProjectClassifyFragment();
                         break;
                     case R.id.bnv_recreation:
                         // TODO: 2018/8/6 娱乐
+                        showRecreationFragment();
                         break;
                 }
                 return true;

@@ -20,9 +20,9 @@ public class ProjectClassifyRemoteDataSource implements ProjectClassifyDataSourc
     }
 
     @Override
-    public Observable<List<ClassifyDetailData>> getProjectClassifyDetailData(int page, int cid) {
+    public Observable<ClassifyDetailData> getProjectClassifyDetailData(int page, int cid) {
         return RetrofitClient.getInstance().create(ApiServer.class)
                 .getProjectClassifyDetail(page, cid)
-                .flatMap(new ServerFunction<List<ClassifyDetailData>>());
+                .flatMap(new ServerFunction<ClassifyDetailData>());
     }
 }

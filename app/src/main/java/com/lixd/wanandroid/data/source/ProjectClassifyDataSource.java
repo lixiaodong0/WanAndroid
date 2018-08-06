@@ -11,6 +11,6 @@ public interface ProjectClassifyDataSource {
 
     Observable<List<ClassifyData>> getProjectClassifyData();
 
-    Observable<List<ClassifyDetailData>> getProjectClassifyDetailData(int page, int cid);
+    Observable<ClassifyDetailData> getProjectClassifyDetailData(int page, int cid);
 
 }

@@ -1,6 +1,7 @@
 package com.lixd.wanandroid.adapter;
 
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 
@@ -19,9 +20,9 @@ public class ProjectClassifyAdapter extends BaseQuickAdapter<ClassifyData, Proje
     @Override
     protected void convert(ClassifyViewHolder helper, ClassifyData item) {
         if (item.isSelected) {
-            helper.mTvClassifyTitle.setTextColor(Color.RED);
+            helper.mTvClassifyTitle.setTextColor(ContextCompat.getColor(mContext,R.color.colorPrimary));
         } else {
-            helper.mTvClassifyTitle.setTextColor(Color.GREEN);
+            helper.mTvClassifyTitle.setTextColor(Color.DKGRAY);
         }
         helper.mTvClassifyTitle.setText(item.name);
     }
