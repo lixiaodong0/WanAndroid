@@ -1,6 +1,8 @@
 package com.lixd.wanandroid.mvp;
 
-public interface BasePresenter {
+import java.io.Serializable;
+
+public interface BasePresenter extends Serializable {
     void subscribe();
 
     void unsubscribe();

@@ -19,13 +19,13 @@ public abstract class BaseFragment extends Fragment {
         } else if (layout instanceof Integer) {
             View rootView = inflater.inflate((Integer) layout, container, false);
             initView(rootView);
-            initData();
+            initData(savedInstanceState);
             initEvent();
             return rootView;
         } else if (layout instanceof View) {
             View rootView = (View) layout;
             initView(rootView);
-            initData();
+            initData(savedInstanceState);
             initEvent();
             return rootView;
         } else {
@@ -38,7 +38,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void initView(View rootView);
 
-    protected void initData() {}
+    protected void initData(Bundle savedInstanceState) {}
 
     protected void initEvent() {}
 }

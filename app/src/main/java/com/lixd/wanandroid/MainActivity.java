@@ -19,6 +19,10 @@ import com.lixd.wanandroid.mvp.project.ProjectClassifyPresenter;
 import com.lixd.wanandroid.mvp.recreation.RecreationFragment;
 
 public class MainActivity extends BaseActivity {
+    private static final String PAGE_CODE_KEY = "PAGE_CODE";
+    private static final int HOME_CODE = 1;         //首页
+    private static final int PROJECT_CODE = 2;      //项目
+    private static final int RECREATION_CODE = 3;   //娱乐
 
     private Toolbar mToolbar;
     private NavigationView mNavigationView;
@@ -27,6 +31,8 @@ public class MainActivity extends BaseActivity {
     private HomeFragment mHomeFragment;
     private ProjectClassifyFragment mProjectClassifyFragment;
     private RecreationFragment mRecreationFragment;
+
+    private int mCurPageCode = HOME_CODE;
 
     @Override
     protected int getLayoutId() {
@@ -65,10 +71,12 @@ public class MainActivity extends BaseActivity {
             mHomeFragment = (HomeFragment) manager.getFragment(savedInstanceState, HomeFragment.TAG);
             mProjectClassifyFragment = (ProjectClassifyFragment) manager.getFragment(savedInstanceState, ProjectClassifyFragment.TAG);
             mRecreationFragment = (RecreationFragment) manager.getFragment(savedInstanceState, RecreationFragment.TAG);
+            mCurPageCode = savedInstanceState.getInt(PAGE_CODE_KEY);
         } else {
             mHomeFragment = HomeFragment.newInstance();
             mProjectClassifyFragment = ProjectClassifyFragment.newInstance();
             mRecreationFragment = RecreationFragment.newInstance();
+            mCurPageCode = HOME_CODE;
         }
 
         if (!mHomeFragment.isAdded()) {
@@ -92,7 +100,21 @@ public class MainActivity extends BaseActivity {
         new ProjectClassifyPresenter(mProjectClassifyFragment,
                 ProjectClassifyPepository.getInstance(new ProjectClassifyRemoteDataSource()));
 
-        showHomeFragment();
+        restore();
+    }
+
+    private void restore() {
+        switch (mCurPageCode) {
+            case HOME_CODE:
+                showHomeFragment();
+                break;
+            case PROJECT_CODE:
+                showProjectClassifyFragment();
+                break;
+            case RECREATION_CODE:
+                showRecreationFragment();
+                break;
+        }
     }
 
     public void showHomeFragment() {
@@ -102,7 +124,6 @@ public class MainActivity extends BaseActivity {
                 .hide(mProjectClassifyFragment)
                 .hide(mRecreationFragment)
                 .commit();
-
     }
 
     public void showProjectClassifyFragment() {
@@ -154,16 +175,19 @@ public class MainActivity extends BaseActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
+                    //首页
                     case R.id.bnv_home:
-                        // TODO: 2018/8/6 首页
+                        mCurPageCode = HOME_CODE;
                         showHomeFragment();
                         break;
+                    //项目
                     case R.id.bnv_project:
-                        // TODO: 2018/8/6 项目
+                        mCurPageCode = PROJECT_CODE;
                         showProjectClassifyFragment();
                         break;
+                    //娱乐
                     case R.id.bnv_recreation:
-                        // TODO: 2018/8/6 娱乐
+                        mCurPageCode = RECREATION_CODE;
                         showRecreationFragment();
                         break;
                 }
@@ -176,13 +200,13 @@ public class MainActivity extends BaseActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         FragmentManager manager = getSupportFragmentManager();
+        outState.putInt(PAGE_CODE_KEY, mCurPageCode);
         if (mHomeFragment.isAdded()) {
             manager.putFragment(outState, HomeFragment.TAG, mHomeFragment);
         }
         if (mProjectClassifyFragment.isAdded()) {
             manager.putFragment(outState, ProjectClassifyFragment.TAG, mProjectClassifyFragment);
         }
-
         if (mRecreationFragment.isAdded()) {
             manager.putFragment(outState, RecreationFragment.TAG, mRecreationFragment);
         }

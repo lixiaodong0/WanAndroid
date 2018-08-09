@@ -1,5 +1,6 @@
 package com.lixd.wanandroid.mvp.project;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -41,6 +42,21 @@ public class ProjectClassifyFragment extends BaseFragment implements ProjectClas
     }
 
     @Override
+    protected void initData(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            List<ClassifyData> data = mProjectClassifyAdapter.getData();
+            if (data != null && data.size() > 0) {
+                for (ClassifyData classifyData : data) {
+                    if (classifyData.isSelected) {
+                        showClassifyDetailFragment(classifyData.id);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
     protected void initEvent() {
         mProjectClassifyAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -69,12 +85,14 @@ public class ProjectClassifyFragment extends BaseFragment implements ProjectClas
         }
     }
 
+    private ProjectClassifyDetailFragment mClassifyDetailFragment;
+
     private void showClassifyDetailFragment(int cid) {
-        ProjectClassifyDetailFragment classifyDetailFragment = ProjectClassifyDetailFragment.newInstance(cid);
-        new ProjectClassifyDetailPresenter(classifyDetailFragment,
+        mClassifyDetailFragment = ProjectClassifyDetailFragment.newInstance(cid);
+        new ProjectClassifyDetailPresenter(mClassifyDetailFragment,
                 ProjectClassifyPepository.getInstance(new ProjectClassifyRemoteDataSource()));
         getChildFragmentManager().beginTransaction()
-                .replace(R.id.fl_container, classifyDetailFragment)
+                .replace(R.id.fl_container, mClassifyDetailFragment)
                 .commit();
     }
 

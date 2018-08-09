@@ -1,6 +1,7 @@
 package com.lixd.wanandroid.mvp.project;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.lixd.wanandroid.data.ClassifyDetailData;
 import java.util.List;
 
 public class ProjectClassifyDetailFragment extends BaseFragment implements ProjectClassifyDetailContract.View {
+    public static final String TAG = ProjectClassifyDetailFragment.class.getSimpleName();
     private static final String CID_KEY = "CID";
     private RecyclerView mRecyClassifyDetail;
     private ProjectClassifyDetailAdapter mProjectClassifyDetailAdapter;
@@ -43,11 +45,16 @@ public class ProjectClassifyDetailFragment extends BaseFragment implements Proje
     }
 
     @Override
-    protected void initData() {
+    protected void initData(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            mPresenter = (ProjectClassifyDetailContract.Presenter) savedInstanceState.getSerializable("presenter");
+        }
         Bundle arguments = getArguments();
         if (arguments != null) {
             mCid = arguments.getInt(CID_KEY);
-            mPresenter.getProjectClassifyDetail(mPage, mCid);
+            if (mPresenter != null) {
+                mPresenter.getProjectClassifyDetail(mPage, mCid);
+            }
         }
     }
 
@@ -76,5 +83,13 @@ public class ProjectClassifyDetailFragment extends BaseFragment implements Proje
     public void onPause() {
         super.onPause();
         mPresenter.unsubscribe();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mPresenter != null) {
+            outState.putSerializable("presenter", mPresenter);
+        }
     }
 }
