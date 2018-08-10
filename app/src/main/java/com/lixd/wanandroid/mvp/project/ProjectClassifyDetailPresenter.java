@@ -1,5 +1,6 @@
 package com.lixd.wanandroid.mvp.project;
 
+import com.lixd.wanandroid.data.ArticleData;
 import com.lixd.wanandroid.data.ClassifyDetailData;
 import com.lixd.wanandroid.data.source.ProjectClassifyPepository;
 import com.lixd.wanandroid.net.rx.CustomEasyObserver;
@@ -31,17 +32,17 @@ public class ProjectClassifyDetailPresenter implements ProjectClassifyDetailCont
     public void getProjectClassifyDetail(int page, int cid) {
         mCompositeDisposable.add(
                 mDataSource.getProjectClassifyDetailData(page, cid)
-                        .flatMap(new Function<ClassifyDetailData, ObservableSource<List<ClassifyDetailData.Project>>>() {
+                        .flatMap(new Function<ClassifyDetailData, ObservableSource<List<ArticleData>>>() {
                             @Override
-                            public ObservableSource<List<ClassifyDetailData.Project>> apply(ClassifyDetailData classifyDetailData) throws Exception {
+                            public ObservableSource<List<ArticleData>> apply(ClassifyDetailData classifyDetailData) throws Exception {
                                 return Observable.just(classifyDetailData.datas);
                             }
                         })
                         .subscribeOn(mSchedulerProvider.io())
                         .observeOn(mSchedulerProvider.ui())
-                        .subscribeWith(new CustomEasyObserver<List<ClassifyDetailData.Project>>() {
+                        .subscribeWith(new CustomEasyObserver<List<ArticleData>>() {
                             @Override
-                            protected void onSuccess(List<ClassifyDetailData.Project> data) {
+                            protected void onSuccess(List<ArticleData> data) {
                                 mView.showProjectClassifyDetail(data);
                             }
 

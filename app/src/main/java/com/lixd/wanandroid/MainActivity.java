@@ -13,7 +13,7 @@ import android.view.MenuItem;
 import com.lixd.wanandroid.base.BaseActivity;
 import com.lixd.wanandroid.data.source.ProjectClassifyPepository;
 import com.lixd.wanandroid.data.source.remote.ProjectClassifyRemoteDataSource;
-import com.lixd.wanandroid.mvp.home.HomeFragment;
+import com.lixd.wanandroid.mvp.home.HomeContainerFragment;
 import com.lixd.wanandroid.mvp.project.ProjectClassifyFragment;
 import com.lixd.wanandroid.mvp.project.ProjectClassifyPresenter;
 import com.lixd.wanandroid.mvp.recreation.RecreationFragment;
@@ -28,7 +28,7 @@ public class MainActivity extends BaseActivity {
     private NavigationView mNavigationView;
     private DrawerLayout mDrawerLayout;
     private BottomNavigationView mBottomNavigationView;
-    private HomeFragment mHomeFragment;
+    private HomeContainerFragment mHomeFragment;
     private ProjectClassifyFragment mProjectClassifyFragment;
     private RecreationFragment mRecreationFragment;
 
@@ -68,12 +68,12 @@ public class MainActivity extends BaseActivity {
     protected void initData(Bundle savedInstanceState) {
         FragmentManager manager = getSupportFragmentManager();
         if (savedInstanceState != null) {
-            mHomeFragment = (HomeFragment) manager.getFragment(savedInstanceState, HomeFragment.TAG);
+            mHomeFragment = (HomeContainerFragment) manager.getFragment(savedInstanceState, HomeContainerFragment.TAG);
             mProjectClassifyFragment = (ProjectClassifyFragment) manager.getFragment(savedInstanceState, ProjectClassifyFragment.TAG);
             mRecreationFragment = (RecreationFragment) manager.getFragment(savedInstanceState, RecreationFragment.TAG);
             mCurPageCode = savedInstanceState.getInt(PAGE_CODE_KEY);
         } else {
-            mHomeFragment = HomeFragment.newInstance();
+            mHomeFragment = HomeContainerFragment.newInstance();
             mProjectClassifyFragment = ProjectClassifyFragment.newInstance();
             mRecreationFragment = RecreationFragment.newInstance();
             mCurPageCode = HOME_CODE;
@@ -81,7 +81,7 @@ public class MainActivity extends BaseActivity {
 
         if (!mHomeFragment.isAdded()) {
             manager.beginTransaction()
-                    .add(R.id.fl_container, mHomeFragment, HomeFragment.TAG)
+                    .add(R.id.fl_container, mHomeFragment, HomeContainerFragment.TAG)
                     .commit();
         }
 
@@ -202,7 +202,7 @@ public class MainActivity extends BaseActivity {
         FragmentManager manager = getSupportFragmentManager();
         outState.putInt(PAGE_CODE_KEY, mCurPageCode);
         if (mHomeFragment.isAdded()) {
-            manager.putFragment(outState, HomeFragment.TAG, mHomeFragment);
+            manager.putFragment(outState, HomeContainerFragment.TAG, mHomeFragment);
         }
         if (mProjectClassifyFragment.isAdded()) {
             manager.putFragment(outState, ProjectClassifyFragment.TAG, mProjectClassifyFragment);

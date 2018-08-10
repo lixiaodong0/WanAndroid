@@ -36,5 +36,6 @@ dependencies {
     implementation rootProject.ext.dependencies.glide
     implementation rootProject.ext.dependencies.logger
     implementation rootProject.ext.dependencies.BRVAH
+    implementation rootProject.ext.dependencies.banner
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
 }

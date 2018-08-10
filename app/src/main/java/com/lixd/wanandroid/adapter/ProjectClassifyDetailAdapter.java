@@ -7,17 +7,17 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lixd.wanandroid.R;
-import com.lixd.wanandroid.data.ClassifyDetailData;
+import com.lixd.wanandroid.data.ArticleData;
 import com.lixd.wanandroid.util.ImageUtil;
 
-public class ProjectClassifyDetailAdapter extends BaseQuickAdapter<ClassifyDetailData.Project, ProjectClassifyDetailAdapter.ProjectClassifyDetailViewHolder> {
+public class ProjectClassifyDetailAdapter extends BaseQuickAdapter<ArticleData, ProjectClassifyDetailAdapter.ProjectClassifyDetailViewHolder> {
 
     public ProjectClassifyDetailAdapter() {
         super(R.layout.project_classify_detail_recycle_item);
     }
 
     @Override
-    protected void convert(ProjectClassifyDetailViewHolder helper, ClassifyDetailData.Project item) {
+    protected void convert(ProjectClassifyDetailViewHolder helper, ArticleData item) {
         ImageUtil.loadImage(mContext, helper.mImgProjectIcon, item.envelopePic);
         helper.mTvAuthor.setText(item.author);
         helper.mTvProjectDate.setText(item.niceDate);

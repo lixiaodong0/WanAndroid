@@ -20,7 +20,9 @@ ext {
 
             logger  : "1.15",
 
-            BRVAH : "2.9.30"
+            BRVAH : "2.9.30",
+
+            banner:"1.4.10"
     ]
 
     dependencies = [
@@ -39,7 +41,8 @@ ext {
             glide         : "com.github.bumptech.glide:glide:${version.glide}",
 
             logger        : "com.orhanobut:logger:${version.logger}",
-            BRVAH         : "com.github.CymChad:BaseRecyclerViewAdapterHelper:${version.BRVAH}"
+            BRVAH         : "com.github.CymChad:BaseRecyclerViewAdapterHelper:${version.BRVAH}",
+            banner         : "com.youth.banner:banner:${version.banner}"
 
     ]
 

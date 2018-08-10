@@ -1,8 +1,10 @@
 package com.lixd.wanandroid.net;
 
+import com.lixd.wanandroid.data.BannerData;
 import com.lixd.wanandroid.data.BaseData;
 import com.lixd.wanandroid.data.ClassifyData;
 import com.lixd.wanandroid.data.ClassifyDetailData;
+import com.lixd.wanandroid.data.TreeData;
 import com.lixd.wanandroid.data.UserData;
 
 import java.util.List;
@@ -46,7 +48,32 @@ public interface ApiServer {
      * 获取首页banner图数据
      */
     @GET("banner/json")
-    Observable<ResponseBody> getBanner();
+    Observable<List<BannerData>> getBanner();
+
+    /**
+     * 获取首页文章
+     *
+     * @param page 页数
+     * @return
+     */
+    @GET("article/list/{page}/json")
+    Observable<BaseData<ClassifyDetailData>> getHomeArticle(@Path("page") int page);
+
+    /**
+     * 获取体系数据列表
+     *
+     * @return
+     */
+    @GET("tree/json")
+    Observable<BaseData<List<TreeData>>> getTreeList();
+
+    /**
+     * 获取体系数据列表详情数据
+     *
+     * @return
+     */
+    @GET("article/list/{page}/json")
+    Observable<BaseData<ClassifyDetailData>> getTreeDetail(@Path("page") int page, @Query("cid") int cid);
 
     /***
      * 获取目前搜索最多的关键词。

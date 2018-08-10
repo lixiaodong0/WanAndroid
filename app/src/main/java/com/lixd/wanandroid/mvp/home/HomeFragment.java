@@ -6,7 +6,6 @@ import com.lixd.wanandroid.R;
 import com.lixd.wanandroid.base.BaseFragment;
 
 public class HomeFragment extends BaseFragment {
-
     public static final String TAG = HomeFragment.class.getSimpleName();
 
     public static final HomeFragment newInstance() {
@@ -16,7 +15,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected Object getLayout() {
-        return R.layout.home_fragmnet;
+        return R.layout.home_fragment;
     }
 
     @Override

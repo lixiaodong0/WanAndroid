@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.lixd.wanandroid.R;
 import com.lixd.wanandroid.adapter.ProjectClassifyDetailAdapter;
 import com.lixd.wanandroid.base.BaseFragment;
+import com.lixd.wanandroid.data.ArticleData;
 import com.lixd.wanandroid.data.ClassifyDetailData;
 
 import java.util.List;
@@ -59,7 +60,7 @@ public class ProjectClassifyDetailFragment extends BaseFragment implements Proje
     }
 
     @Override
-    public void showProjectClassifyDetail(List<ClassifyDetailData.Project> data) {
+    public void showProjectClassifyDetail(List<ArticleData> data) {
         mProjectClassifyDetailAdapter.setNewData(data);
     }
 

@@ -12,4 +12,8 @@
     <string name="open">打开</string>
     <string name="close">关闭</string>
 
+    <string-array name="home_tab_layout_array">
+        <item>首页</item>
+        <item>体系</item>
+    </string-array>
 </resources>
