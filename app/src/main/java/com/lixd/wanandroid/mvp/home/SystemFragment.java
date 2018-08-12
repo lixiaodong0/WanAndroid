@@ -1,7 +1,6 @@
 package com.lixd.wanandroid.mvp.home;
 
 import android.view.View;
-import android.widget.TextView;
 
 import com.lixd.wanandroid.R;
 import com.lixd.wanandroid.base.BaseFragment;
@@ -22,7 +21,6 @@ public class SystemFragment extends BaseFragment {
 
     @Override
     protected void initView(View rootView) {
-        TextView textView = rootView.findViewById(R.id.tv_title);
-        textView.setText("体系");
+
     }
 }

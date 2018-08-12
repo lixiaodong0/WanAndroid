@@ -8,6 +8,8 @@ import com.lixd.wanandroid.R;
 import com.lixd.wanandroid.adapter.HomeViewPagerAdapter;
 import com.lixd.wanandroid.base.BaseFragment;
 import com.lixd.wanandroid.data.TabData;
+import com.lixd.wanandroid.data.source.HomeRepository;
+import com.lixd.wanandroid.data.source.remote.HomeRemoteDataSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +37,11 @@ public class HomeContainerFragment extends BaseFragment {
         mViewPager = rootView.findViewById(R.id.home_view_pager);
         String[] tabArray = getActivity().getResources().getStringArray(R.array.home_tab_layout_array);
         List<TabData> dataList = new ArrayList<>();
-        dataList.add(new TabData(HomeFragment.newInstance(), tabArray[0]));
-        dataList.add(new TabData(SystemFragment.newInstance(), tabArray[1]));
+        HomeFragment homeFragment = HomeFragment.newInstance();
+        new HomePresenter(homeFragment, HomeRepository.getInstance(new HomeRemoteDataSource()));
+        SystemFragment systemFragment = SystemFragment.newInstance();
+        dataList.add(new TabData(homeFragment, tabArray[0]));
+        dataList.add(new TabData(systemFragment, tabArray[1]));
         mPagerAdapter = new HomeViewPagerAdapter(getChildFragmentManager(), dataList);
         mViewPager.setAdapter(mPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);

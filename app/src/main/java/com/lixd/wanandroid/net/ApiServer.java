@@ -48,7 +48,7 @@ public interface ApiServer {
      * 获取首页banner图数据
      */
     @GET("banner/json")
-    Observable<List<BannerData>> getBanner();
+    Observable<BaseData<List<BannerData>>> getBanner();
 
     /**
      * 获取首页文章
